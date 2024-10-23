@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@wma4nigl5w5^94#c(e9=z@gc^5y@$f@oz(2eq+@ahv+vb281n"
+SECRET_KEY = "django-insecure-c+3yakst#g6*ky+h^q1il%h=!l1xuzatf-p&jg+kc07zq8myz8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,13 +75,13 @@ WSGI_APPLICATION = "MedicDataBase.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "test.sql",
-        "USER": "Hungry_Dragon",
-        "PASSWORD": "123456",
-        "Host": "localhost",
-        "PORT": "3306",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD': 'oYbiE6jpTs*YmvcA',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
