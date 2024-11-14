@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-c+3yakst#g6*ky+h^q1il%h=!l1xuzatf-p&jg+kc07zq8myz8"
+SECRET_KEY = "django-insecure-@-3qgq%&5heh76ia+0i8rxr7)h$qvxm=*rj$4f0ii^arj-igm="
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "Data_Manage"
+    "data_manage"
 ]
 
 MIDDLEWARE = [
@@ -75,11 +75,11 @@ WSGI_APPLICATION = "MedicDataBase.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+    "default": {
+       'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'medicaldata',
         'USER': 'root',
-        'PASSWORD': 'oYbiE6jpTs*YmvcA',
+        'PASSWORD': '2enDSG9byAHJvfx',
         'HOST': 'localhost',
         'PORT': '3306',
     }

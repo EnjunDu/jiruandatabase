@@ -1,7 +1,14 @@
 from django.contrib import admin
-from .models import Customer, Customers, Customers2, DataManageDataManage, DjangoAdminLog, DjangoContentType
 
 # Register your models here.
+from .models import Audiorecord, Department, Devicedata, Doctor, Document, Genomicdata, Hospital, Patient, Standardvideo
 
-admin.site.register(Customers)
-admin.site.register(Customers2)
+admin.site.register(Audiorecord)
+admin.site.register(Department)
+admin.site.register(Devicedata)
+admin.site.register(Doctor)
+admin.site.register(Document)
+admin.site.register(Genomicdata)
+admin.site.register(Hospital)
+admin.site.register(Patient)
+admin.site.register(Standardvideo)
