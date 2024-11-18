@@ -24,7 +24,16 @@ def random_date(start_year=1950, end_year=2023):
     start_date = datetime(start_year, 1, 1)
     end_date = datetime(end_year, 12, 31)
     delta = end_date - start_date
-    return (start_date + timedelta(days=random.randint(0, delta.days))).date()
+    random_days = random.randint(0, delta.days)
+    return (start_date + timedelta(days=random_days)).strftime('%Y-%m-%d')
+
+# 工具函数：生成随机电话号码
+def random_phone_number():
+    return ''.join(random.choice(string.digits) for i in range(10))
+
+# 工具函数：生成随机地址
+def random_address():
+    return f"{random.randint(1, 9999)} {random_string(10)} St"
 
 # 工具函数：生成随机二进制数据
 def random_binary_data(size=256):

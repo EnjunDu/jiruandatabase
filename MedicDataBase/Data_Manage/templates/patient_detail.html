@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Detail</title>
+</head>
+<body>
+    <h1>Patient Detail</h1>
+    <p><strong>Name:</strong> {{ patient.name }}</p>
+    <p><strong>Gender:</strong> {{ patient.gender }}</p>
+    <p><strong>Date of Birth:</strong> {{ patient.dateofbirth }}</p>
+    <p><strong>Contact Info:</strong> {{ patient.contactinfo }}</p>
+    <p><strong>Address:</strong> {{ patient.address }}</p>
+
+    <h2>Medical Records</h2>
+    <table border="1">
+        <tr>
+            <th>Record ID</th>
+            <th>Doctor ID</th>
+            <th>Diagnosis Date</th>
+            <th>Diagnosis Result</th>
+            <th>Prescription</th>
+        </tr>
+        {% for record in medical_records %}
+        <tr>
+            <td>{{ record.recordid }}</td>
+            <td>{{ record.doctorid }}</td>
+            <td>{{ record.diagnosisdate }}</td>
+            <td><a href="{% url 'patient_pdf' patient.patientid 'diagnosisresult' %}">View PDF</a></td>
+            <td><a href="{% url 'patient_pdf' patient.patientid 'prescription' %}">View PDF</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Medical Image</h2>
+    <table border="1">
+        <tr>
+            <th>Image ID</th>
+            <th>Record ID</th>
+            <th>Image Type</th>
+            <th>Upload Date</th>
+            <th>CT Image</th>
+            <th>MRI Image</th>
+            <th>Ultrasound Image</th>
+        </tr>
+        {% for image in medical_images %}
+        <tr>
+            <td>{{ image.imageid }}</td>
+            <td>{{ image.recordid }}</td>
+            <td>{{ image.imagetype }}</td>
+            <td>{{ image.uploaddate }}</td>
+            <td>
+                {% if image.ctimage %}
+                <img src="{% url 'patient_image' image.imageid %}" alt="CT Image" width="100">
+                {% endif %}
+            </td>
+            <td>
+                {% if image.mriimage %}
+                <img src="{% url 'patient_image' image.imageid %}" alt="MRI Image" width="100">
+                {% endif %}
+            </td>
+            <td>
+                {% if image.ultrasoundimage %}
+                <img src="{% url 'patient_image' image.imageid %}" alt="Ultrasound Image" width="100">
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</body>
+</html>
