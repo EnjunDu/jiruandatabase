@@ -20,7 +20,5 @@ from data_manage import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('data_manage.urls')),  # 替换为您的应用名称
-    path('patients/<int:patient_id>/pdf/<str:field_name>/', views.patient_pdf, name='patient_pdf'),
-    path('patients/image/<int:image_id>/', views.patient_image, name='patient_image'),
+    path('', include('data_manage.urls')),  # 确保应用名称为data_manage
 ]

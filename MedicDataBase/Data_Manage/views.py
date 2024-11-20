@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-from .models import Patient , Medicalrecord , Medicalimage
+from .models import Patient , Medicalrecord , Medicalimage , Devicedata , Genomicdata
 
 def patient_list(request):
     query = request.GET.get('q')
@@ -17,12 +17,24 @@ def patient_detail(request, patient_id):
     patient = get_object_or_404(Patient, patientid=patient_id)
     medical_records = Medicalrecord.objects.filter(patientid=patient_id)
     medical_images = Medicalimage.objects.filter(recordid__in=medical_records.values_list('recordid', flat=True))
+    device_datas = Devicedata.objects.filter(patientid=patient_id)
+    genomic_datas = Genomicdata.objects.filter(patientid=patient_id)
     return render(request, 'patient_detail.html', {
         'patient': patient,
         'medical_records': medical_records,
-        'medical_images': medical_images
+        'medical_images': medical_images,
+        'device_datas': device_datas,
+        'genomic_datas': genomic_datas
     })
 
+def device_pdf(request, data_id):
+    device_data = get_object_or_404(Devicedata, dataid=data_id)
+    pdf_data = device_data.datacontent
+    if pdf_data is None:
+        return HttpResponse("PDF not found", status=404)
+    response = HttpResponse(pdf_data, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="device_data_{data_id}.pdf"'
+    return response
 
 def patient_pdf(request, patient_id, field_name):
     medical_record = get_object_or_404(Medicalrecord, patientid=patient_id)
@@ -32,6 +44,7 @@ def patient_pdf(request, patient_id, field_name):
     response = HttpResponse(pdf_data, content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="{field_name}.pdf"'
     return response
+
 
 def patient_image(request, image_id):
     medical_image = get_object_or_404(Medicalimage, imageid=image_id)
@@ -48,4 +61,16 @@ def patient_image(request, image_id):
     if image_data is None:
         return HttpResponse("Image not found", status=404)
     response = HttpResponse(image_data, content_type=content_type)
+    return response
+
+def genomic_data(request, gene_id, field_name):
+    genomic_data = get_object_or_404(Genomicdata, geneid=gene_id)
+    file_data = getattr(genomic_data, field_name, None)
+    if file_data is None:
+        return HttpResponse("Field not found", status=404)
+    content_type = 'application/octet-stream'
+    if field_name == 'genesequence':
+        content_type = 'application/fasta'
+    response = HttpResponse(file_data, content_type=content_type)
+    response['Content-Disposition'] = f'attachment; filename="{field_name}_{gene_id}.{field_name.split("sequence")[-1] if field_name == "genesequence" else "pdf"}"'
     return response

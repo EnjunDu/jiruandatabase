@@ -2,8 +2,44 @@
 <html>
 <head>
     <title>Patient Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
+    <a href="{% url 'patient_list' %}" class="back-link">← Back to Patient List</a>
     <h1>Patient Detail</h1>
     <p><strong>Name:</strong> {{ patient.name }}</p>
     <p><strong>Gender:</strong> {{ patient.gender }}</p>
@@ -12,7 +48,7 @@
     <p><strong>Address:</strong> {{ patient.address }}</p>
 
     <h2>Medical Records</h2>
-    <table border="1">
+    <table>
         <tr>
             <th>Record ID</th>
             <th>Doctor ID</th>
@@ -30,9 +66,9 @@
         </tr>
         {% endfor %}
     </table>
-    
-    <h2>Medical Image</h2>
-    <table border="1">
+
+    <h2>Medical Images</h2>
+    <table>
         <tr>
             <th>Image ID</th>
             <th>Record ID</th>
@@ -65,7 +101,40 @@
             </td>
         </tr>
         {% endfor %}
+    </table>
 
+    <h2>Device Data</h2>
+    <table>
+        <tr>
+            <th>Data ID</th>
+            <th>Device Type</th>
+            <th>Data Content</th>
+            <th>Record Date</th>
+        </tr>
+        {% for data in device_datas %}
+        <tr>
+            <td>{{ data.dataid }}</td>
+            <td>{{ data.devicetype }}</td>
+            <td><a href="{% url 'device_pdf' data.dataid %}">View PDF</a></td>
+            <td>{{ data.recorddate }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Genomic Data</h2>
+    <table>
+        <tr>
+            <th>Gene ID</th>
+            <th>Gene Sequence</th>
+            <th>Analysis Result</th>
+        </tr>
+        {% for data in genomic_datas %}
+        <tr>
+            <td>{{ data.geneid }}</td>
+            <td><a href="{% url 'genomic_data' data.geneid 'genesequence' %}">Download Sequence</a></td>
+            <td><a href="{% url 'genomic_data' data.geneid 'analysisresult' %}">View Analysis</a></td>
+        </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
