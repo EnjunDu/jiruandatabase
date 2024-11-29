@@ -11,6 +11,6 @@ urlpatterns = [
     path('patients/genomic_data/<int:gene_id>/<str:field_name>/', views.genomic_data, name='genomic_data'),
 
     path('patients/<int:patient_id>/temperature/', views.patient_temperature, name='patient_temperature'),
-    path('patients/image/<int:image_id>/temperature/', views.temperature_image, name='image_temperature'),
-    path('patients/source/temperature/<int:file_id>/', views.temperature_source, name='source_temperature'),
+    path('temperature_image/<int:temperature_id>/', views.temperature_image, name='temperature_image'),
+    path('temperature_source/<int:temperature_id>/', views.temperature_source, name='source_temperature'),
 ]

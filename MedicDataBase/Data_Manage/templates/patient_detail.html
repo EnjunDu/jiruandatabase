@@ -119,7 +119,7 @@
             <td>{{ temperature.imagetype }}</td>
             <td>{{ temperature.imagepath }}</td>
             <td>
-                {% if temperature.temperatureimage %}
+                {% if temperature.image %}
                 <img src="{% url 'temperature_image' temperature.dataid %}" alt="Temperature Image" width="100">
                 {% endif %}
             </td>
@@ -128,6 +128,7 @@
         </tr>
         {% endfor %}
     </table>
+
 
     <h2>Device Data</h2>
     <table>

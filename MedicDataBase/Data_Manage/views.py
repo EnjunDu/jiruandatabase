@@ -19,12 +19,14 @@ def patient_detail(request, patient_id):
     medical_images = Medicalimage.objects.filter(recordid__in=medical_records.values_list('recordid', flat=True))
     device_datas = Devicedata.objects.filter(patientid=patient_id)
     genomic_datas = Genomicdata.objects.filter(patientid=patient_id)
+    patient_temperatures = Temperature.objects.filter(patientid=patient_id)
     return render(request, 'patient_detail.html', {
         'patient': patient,
         'medical_records': medical_records,
         'medical_images': medical_images,
         'device_datas': device_datas,
-        'genomic_datas': genomic_datas
+        'genomic_datas': genomic_datas,
+        'patient_temperatures': patient_temperatures
     })
 
 def device_pdf(request, data_id):
@@ -75,9 +77,12 @@ def genomic_data(request, gene_id, field_name):
     response['Content-Disposition'] = f'attachment; filename="{field_name}_{gene_id}.{field_name.split("sequence")[-1] if field_name == "genesequence" else "pdf"}"'
     return response
 
+def patient_temperature(request, patient_id):
+    temperature_data = get_object_or_404(Temperature, patient_id=patient_id)
+    return render(request, 'patient_temperature.html', {'temperature_data': temperature_data})
 
 def temperature_image(request, temperature_id):
-    temperature = get_object_or_404(Temperature, temperatureid=temperature_id)
+    temperature = get_object_or_404(Temperature, dataid=temperature_id)
     image_data = temperature.image
     if image_data is None:
         return HttpResponse("Image not found", status=404)
@@ -85,18 +90,10 @@ def temperature_image(request, temperature_id):
     return response
 
 def temperature_source(request, temperature_id):
-    temperature = get_object_or_404(Temperature, temperatureid=temperature_id)
-    file_data = temperature.source
+    temperature = get_object_or_404(Temperature, dataid=temperature_id)
+    file_data = temperature.sourcefile
     if file_data is None:
         return HttpResponse("File not found", status=404)
     response = HttpResponse(file_data, content_type='application/octet-stream')
     response['Content-Disposition'] = f'attachment; filename="temperature_{temperature_id}.csv"'
     return response
-
-def patient_temperature(request, patient_id):
-    patient = get_object_or_404(Patient, patientid=patient_id)
-    temperatures = Temperature.objects.filter(patientid=patient_id)
-    return render(request, 'patient_temperature.html', {
-        'patient': patient,
-        'temperatures': temperatures
-    })
