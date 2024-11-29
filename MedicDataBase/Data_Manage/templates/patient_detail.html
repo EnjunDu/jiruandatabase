@@ -103,6 +103,32 @@
         {% endfor %}
     </table>
 
+    <h2>Patient Temperature</h2>
+    <table>
+        <tr>
+            <th>Data ID</th>
+            <th>Image Type</th>
+            <th>Image Path</th>
+            <th>Temperature Image</th>
+            <th>Record Date</th>
+            <th>Source File</th>
+        </tr>
+        {% for temperature in patient_temperatures %}
+        <tr>
+            <td>{{ temperature.dataid }}</td>
+            <td>{{ temperature.imagetype }}</td>
+            <td>{{ temperature.imagepath }}</td>
+            <td>
+                {% if temperature.temperatureimage %}
+                <img src="{% url 'temperature_image' temperature.dataid %}" alt="Temperature Image" width="100">
+                {% endif %}
+            </td>
+            <td>{{ temperature.recorddate }}</td>
+            <td><a href="{% url 'source_temperature' temperature.dataid %}">Download CSV</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
     <h2>Device Data</h2>
     <table>
         <tr>

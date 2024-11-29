@@ -136,3 +136,18 @@ class Standardvideo(models.Model):
     class Meta:
         managed = False
         db_table = 'standardvideo'
+
+class Temperature(models.Model):
+    dataid = models.AutoField(db_column='DataID', primary_key=True)  # Field name made lowercase.
+    patientid = models.ForeignKey('Patient', models.DO_NOTHING, db_column='PatientID', blank=True, null=True)  # Field name made lowercase.
+    imagetype = models.CharField(db_column='ImageType', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    imagepath = models.CharField(db_column='ImagePath', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    sourcetype = models.CharField(db_column='SourceType', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    sourcepath = models.CharField(db_column='SourcePath', max_length=255, blank=True, null=True)  # Field name made lowercase
+    source = models.BinaryField(db_column='SourceFile', blank=True, null=True)  # Field name made lowercase.
+    image = models.BinaryField(db_column='Image', blank=True, null=True)  # Field name made lowercase.
+    recorddate = models.DateField(db_column='RecordDate', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'temperature'

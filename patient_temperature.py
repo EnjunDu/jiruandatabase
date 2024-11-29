@@ -7,7 +7,7 @@ import csv
 db = mysql.connector.connect(
     host="localhost",  # MySQL服务器地址
     user="root",   # 用户名
-    password="root",  # 密码
+    password="2enDSG9byAHJvfx",  # 密码
     database="patient_temperature"  # 数据库名称
 )
 

@@ -17,8 +17,7 @@ cursor = connection.cursor()
 
 # 工具函数：生成随机字符串
 def random_string(length=10):
-    letters = string.ascii_letters
-    return ''.join(random.choice(letters) for i in range(length))
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 # 工具函数：生成随机日期
 def random_date(start_year=1950, end_year=2023):
@@ -36,35 +35,35 @@ def random_phone_number():
 def random_address():
     return f"{random.randint(1, 9999)} {random_string(10)} St"
 
+# 工具函数：生成随机二进制数据
+def random_binary_data(size=256):
+    return bytes(random.getrandbits(8) for _ in range(size))
+
 # 读取二进制文件
 def read_binary_file(file_path):
     with open(file_path, 'rb') as file:
         binary_data = file.read()
     return binary_data
 
-# 插入随机数据到各表
 try:
+    # 插入 Temperature 数据
     cursor.execute("SELECT PatientID FROM Patient")
     patient_ids = [row[0] for row in cursor.fetchall()]
-    for _ in range(1):  # 插入1条数据
+    for _ in range(10):  # 插入10条数据
         cursor.execute("""
-            INSERT INTO Temperature (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO Temperature (PatientID, ImageType, ImagePath, TemperatureImage, RecordDate)
+            VALUES (%s, %s, %s, %s, %s)
         """, (
             random.choice(patient_ids),
             'Prediction',
             r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\patient_blood_pressure1.png',
-            'Record',  # Correctly insert a string value for SourceType
-            r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_pressure\patient_blood_pressure1.csv',
-            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_pressure\patient_blood_pressure1.csv'),
             read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\patient_blood_pressure1.png'),
             random_date()
         ))
-    # 其他插入数据的代码...
 
     # 提交更改并关闭连接
     connection.commit()
-    print("数据已成功插入。")
+    print("Temperature数据已成功插入。")
 
 except Exception as e:
     print(f"发生错误：{e}")

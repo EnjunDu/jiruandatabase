@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-from .models import Patient , Medicalrecord , Medicalimage , Devicedata , Genomicdata
+from .models import Patient , Medicalrecord , Medicalimage , Devicedata , Genomicdata , Temperature , Audiorecord , Department , Doctor , Document , Hospital , Standardvideo
 
 def patient_list(request):
     query = request.GET.get('q')
@@ -74,3 +74,29 @@ def genomic_data(request, gene_id, field_name):
     response = HttpResponse(file_data, content_type=content_type)
     response['Content-Disposition'] = f'attachment; filename="{field_name}_{gene_id}.{field_name.split("sequence")[-1] if field_name == "genesequence" else "pdf"}"'
     return response
+
+
+def temperature_image(request, temperature_id):
+    temperature = get_object_or_404(Temperature, temperatureid=temperature_id)
+    image_data = temperature.image
+    if image_data is None:
+        return HttpResponse("Image not found", status=404)
+    response = HttpResponse(image_data, content_type='image/jpeg')
+    return response
+
+def temperature_source(request, temperature_id):
+    temperature = get_object_or_404(Temperature, temperatureid=temperature_id)
+    file_data = temperature.source
+    if file_data is None:
+        return HttpResponse("File not found", status=404)
+    response = HttpResponse(file_data, content_type='application/octet-stream')
+    response['Content-Disposition'] = f'attachment; filename="temperature_{temperature_id}.csv"'
+    return response
+
+def patient_temperature(request, patient_id):
+    patient = get_object_or_404(Patient, patientid=patient_id)
+    temperatures = Temperature.objects.filter(patientid=patient_id)
+    return render(request, 'patient_temperature.html', {
+        'patient': patient,
+        'temperatures': temperatures
+    })
