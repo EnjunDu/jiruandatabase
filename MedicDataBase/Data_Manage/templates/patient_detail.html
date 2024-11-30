@@ -129,7 +129,58 @@
         {% endfor %}
     </table>
 
+    <h2>Patient BloodSugar</h2>
+    <table>
+        <tr>
+            <th>Data ID</th>
+            <th>Image Type</th>
+            <th>Image Path</th>
+            <th>BloodSugar Image</th>
+            <th>Record Date</th>
+            <th>Source File</th>
+        </tr>
+        {% for bloodsugar in patient_bloodsugars %}
+        <tr>
+            <td>{{ bloodsugar.dataid }}</td>
+            <td>{{ bloodsugar.imagetype }}</td>
+            <td>{{ bloodsugar.imagepath }}</td>
+            <td>
+                {% if bloodsugar.image %}
+                <img src="{% url 'bloodsugar_image' bloodsugar.dataid %}" alt="BloodSugar Image" width="100">
+                {% endif %}
+            </td>
+            <td>{{ bloodsugar.recorddate }}</td>
+            <td><a href="{% url 'source_bloodsugar' bloodsugar.dataid %}">Download CSV</a></td>
+        </tr>
+        {% endfor %}
+    </table>
 
+    <h2>Patient BloodPressure</h2>
+    <table>
+        <tr>
+            <th>Data ID</th>
+            <th>Image Type</th>
+            <th>Image Path</th>
+            <th>BloodPressure Image</th>
+            <th>Record Date</th>
+            <th>Source File</th>
+        </tr>
+        {% for bloodpressure in patient_bloodpressures %}
+        <tr>
+            <td>{{ bloodpressure.dataid }}</td>
+            <td>{{ bloodpressure.imagetype }}</td>
+            <td>{{ bloodpressure.imagepath }}</td>
+            <td>
+                {% if bloodpressure.image %}
+                <img src="{% url 'bloodpressure_image' bloodpressure.dataid %}" alt="BloodPressure Image" width="100">
+                {% endif %}
+            </td>
+            <td>{{ bloodpressure.recorddate }}</td>
+            <td><a href="{% url 'source_bloodpressure' bloodpressure.dataid %}">Download CSV</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+        
     <h2>Device Data</h2>
     <table>
         <tr>

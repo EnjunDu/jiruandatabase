@@ -13,4 +13,12 @@ urlpatterns = [
     path('patients/<int:patient_id>/temperature/', views.patient_temperature, name='patient_temperature'),
     path('temperature_image/<int:temperature_id>/', views.temperature_image, name='temperature_image'),
     path('temperature_source/<int:temperature_id>/', views.temperature_source, name='source_temperature'),
+
+    path('patients/<int:patient_id>/bloodsugar/', views.patient_bloodsugar, name='patient_bloodsugar'),
+    path('bloodsugar_image/<int:bloodsugar_id>/', views.bloodsugar_image, name='bloodsugar_image'),
+    path('bloodsugar_source/<int:bloodsugar_id>/', views.bloodsugar_source, name='source_bloodsugar'),
+
+    path('patients/<int:patient_id>/bloodpressure/', views.patient_bloodpressure, name='patient_bloodpressure'),
+    path('bloodpressure_image/<int:bloodpressure_id>/', views.bloodpressure_image, name='bloodpressure_image'),
+    path('bloodpressure_source/<int:bloodpressure_id>/', views.bloodpressure_source, name='source_bloodpressure'),
 ]

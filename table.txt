@@ -197,3 +197,42 @@ PatientID: 使用 INT 类型，并定义为外键，引用 Patient 表中的 Pat
 ImageType: 使用 VARCHAR(50)，假设影像类型的最大长度为 50 个字符。
 StoragePath: 使用 VARCHAR(255)，假设存储路径的最大长度为 255 个字符。
 RecordDate: 使用 DATE 类型来存储记录日期。
+
+
+十四、
+CREATE TABLE Bloodpressure (
+    DataID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT,
+    ImageType VARCHAR(50),
+    ImagePath VARCHAR(255),
+    SourceType VARCHAR(50),
+    SourcePath VARCHAR(255),
+    SourceFile LONGBLOB,
+    Image LONGBLOB,
+    RecordDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID)
+);
+DataID: 使用 INT 类型，并设置为 AUTO_INCREMENT，以便自动生成唯一的 ID。它被定义为 PRIMARY KEY。
+PatientID: 使用 INT 类型，并定义为外键，引用 Patient 表中的 PatientID 字段。
+ImageType: 使用 VARCHAR(50)，假设影像类型的最大长度为 50 个字符。
+StoragePath: 使用 VARCHAR(255)，假设存储路径的最大长度为 255 个字符。
+RecordDate: 使用 DATE 类型来存储记录日期。
+
+
+CREATE TABLE BloodSugar (
+    DataID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT,
+    ImageType VARCHAR(50),
+    ImagePath VARCHAR(255),
+    SourceType VARCHAR(50),
+    SourcePath VARCHAR(255),
+    SourceFile LONGBLOB,
+    Image LONGBLOB,
+    RecordDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID)
+);
+DataID: 使用 INT 类型，并设置为 AUTO_INCREMENT，以便自动生成唯一的 ID。它被定义为 PRIMARY KEY。
+PatientID: 使用 INT 类型，并定义为外键，引用 Patient 表中的 PatientID 字段。
+ImageType: 使用 VARCHAR(50)，假设影像类型的最大长度为 50 个字符。
+StoragePath: 使用 VARCHAR(255)，假设存储路径的最大长度为 255 个字符。
+RecordDate: 使用 DATE 类型来存储记录日期。

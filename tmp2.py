@@ -48,7 +48,7 @@ try:
     patient_ids = [row[0] for row in cursor.fetchall()]
     for _ in range(1):  # 插入1条数据
         cursor.execute("""
-            INSERT INTO Temperature (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
+            INSERT INTO Bloodpressure (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """, (
             random.choice(patient_ids),
@@ -60,7 +60,36 @@ try:
             read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\patient_blood_pressure1.png'),
             random_date()
         ))
-    # 其他插入数据的代码...
+    
+    for _ in range(1):  # 插入1条数据
+        cursor.execute("""
+            INSERT INTO Temperature (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            random.choice(patient_ids),
+            'Prediction',
+            r'D:\JiRuan_Projects\database_for_jiruan\Predictions\Temperature\predict_for_patient_temperature1.png',
+            'Record',  # Correctly insert a string value for SourceType
+            r'D:\JiRuan_Projects\database_for_jiruan\patient_temperature\patient_temperature1.csv',
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_temperature\patient_temperature1.csv'),
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_temperature\patient_temperature1.csv'),
+            random_date()
+        ))
+
+    for _ in range(1):  # 插入1条数据
+        cursor.execute("""
+            INSERT INTO BloodSugar (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            random.choice(patient_ids),
+            'Prediction',
+            r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodSugar\predict_for_patient_blood_sugar1.png',
+            'Record',  # Correctly insert a string value for SourceType
+            r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_sugar\patient_blood_sugar.csv1.csv',
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_sugar\patient_blood_sugar.csv1.csv'),
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodSugar\predict_for_patient_blood_sugar1.png'),
+            random_date()
+        ))
 
     # 提交更改并关闭连接
     connection.commit()
