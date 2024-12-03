@@ -1,4 +1,0 @@
-CREATE DATABASE patient_blood_pressure;
-CREATE DATABASE patient_blood_sugar；
-CREATE DATABASE patient_temperature；
-分别创建三个表，之后直接分别运行patient_blood_pressure.py，patient_blood_sugar.py，patient_temperature.py，注意和csv文件放到同一文件夹，直接将代码中的n赋不同的值即可。
