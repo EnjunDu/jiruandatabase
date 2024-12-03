@@ -2,7 +2,8 @@ import pymysql
 import random
 import string
 from datetime import datetime, timedelta
-import os
+import encodings
+import base64
 
 # 连接到 MySQL 数据库
 connection = pymysql.connect(
@@ -36,31 +37,19 @@ def random_phone_number():
 def random_address():
     return f"{random.randint(1, 9999)} {random_string(10)} St"
 
-# 读取二进制文件
+# 读取二进制文件并进行base64编码
 def read_binary_file(file_path):
     with open(file_path, 'rb') as file:
         binary_data = file.read()
-    return binary_data
+    encoded_data = base64.b64encode(binary_data).decode('utf-8')
+    print(type(encoded_data))
+    return encoded_data
 
 # 插入随机数据到各表
 try:
     cursor.execute("SELECT PatientID FROM Patient")
     patient_ids = [row[0] for row in cursor.fetchall()]
-    for _ in range(1):  # 插入1条数据
-        cursor.execute("""
-            INSERT INTO Bloodpressure (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, (
-            random.choice(patient_ids),
-            'Prediction',
-            r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\patient_blood_pressure1.png',
-            'Record',  # Correctly insert a string value for SourceType
-            r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_pressure\patient_blood_pressure1.csv',
-            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_pressure\patient_blood_pressure1.csv'),
-            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\patient_blood_pressure1.png'),
-            random_date()
-        ))
-    
+
     for _ in range(1):  # 插入1条数据
         cursor.execute("""
             INSERT INTO Temperature (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
@@ -72,7 +61,7 @@ try:
             'Record',  # Correctly insert a string value for SourceType
             r'D:\JiRuan_Projects\database_for_jiruan\patient_temperature\patient_temperature1.csv',
             read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_temperature\patient_temperature1.csv'),
-            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_temperature\patient_temperature1.csv'),
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\Temperature\predict_for_patient_temperature1.png'),
             random_date()
         ))
 
@@ -88,6 +77,21 @@ try:
             r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_sugar\patient_blood_sugar.csv1.csv',
             read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_sugar\patient_blood_sugar.csv1.csv'),
             read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodSugar\predict_for_patient_blood_sugar1.png'),
+            random_date()
+        ))
+
+    for _ in range(1):  # 插入1条数据
+        cursor.execute("""
+            INSERT INTO BloodPressure (PatientID, ImageType, ImagePath, SourceType, SourcePath, SourceFile, Image, RecordDate)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            random.choice(patient_ids),
+            'Prediction',
+            r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\predict_for_patient_blood_pressure1.png',
+            'Record',  # Correctly insert a string value for SourceType
+            r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_pressure\patient_blood_pressure1.csv',
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\patient_blood_sugar\patient_blood_sugar.csv1.csv'),
+            read_binary_file(r'D:\JiRuan_Projects\database_for_jiruan\Predictions\BloodPressure\patient_blood_pressure1.png'),
             random_date()
         ))
 

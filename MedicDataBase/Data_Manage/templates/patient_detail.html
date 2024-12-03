@@ -108,7 +108,6 @@
         <tr>
             <th>Data ID</th>
             <th>Image Type</th>
-            <th>Image Path</th>
             <th>Temperature Image</th>
             <th>Record Date</th>
             <th>Source File</th>
@@ -117,7 +116,6 @@
         <tr>
             <td>{{ temperature.dataid }}</td>
             <td>{{ temperature.imagetype }}</td>
-            <td>{{ temperature.imagepath }}</td>
             <td>
                 {% if temperature.image %}
                 <img src="{% url 'temperature_image' temperature.dataid %}" alt="Temperature Image" width="100">
@@ -134,7 +132,6 @@
         <tr>
             <th>Data ID</th>
             <th>Image Type</th>
-            <th>Image Path</th>
             <th>BloodSugar Image</th>
             <th>Record Date</th>
             <th>Source File</th>
@@ -143,7 +140,6 @@
         <tr>
             <td>{{ bloodsugar.dataid }}</td>
             <td>{{ bloodsugar.imagetype }}</td>
-            <td>{{ bloodsugar.imagepath }}</td>
             <td>
                 {% if bloodsugar.image %}
                 <img src="{% url 'bloodsugar_image' bloodsugar.dataid %}" alt="BloodSugar Image" width="100">
@@ -155,32 +151,6 @@
         {% endfor %}
     </table>
 
-    <h2>Patient BloodPressure</h2>
-    <table>
-        <tr>
-            <th>Data ID</th>
-            <th>Image Type</th>
-            <th>Image Path</th>
-            <th>BloodPressure Image</th>
-            <th>Record Date</th>
-            <th>Source File</th>
-        </tr>
-        {% for bloodpressure in patient_bloodpressures %}
-        <tr>
-            <td>{{ bloodpressure.dataid }}</td>
-            <td>{{ bloodpressure.imagetype }}</td>
-            <td>{{ bloodpressure.imagepath }}</td>
-            <td>
-                {% if bloodpressure.image %}
-                <img src="{% url 'bloodpressure_image' bloodpressure.dataid %}" alt="BloodPressure Image" width="100">
-                {% endif %}
-            </td>
-            <td>{{ bloodpressure.recorddate }}</td>
-            <td><a href="{% url 'source_bloodpressure' bloodpressure.dataid %}">Download CSV</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-        
     <h2>Device Data</h2>
     <table>
         <tr>

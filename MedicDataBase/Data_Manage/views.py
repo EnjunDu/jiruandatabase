@@ -20,8 +20,8 @@ def patient_detail(request, patient_id):
     device_datas = Devicedata.objects.filter(patientid=patient_id)
     genomic_datas = Genomicdata.objects.filter(patientid=patient_id)
     patient_temperatures = Temperature.objects.filter(patientid=patient_id)
-    patient_bloodsugars = BloodSugar.objects.filter(patientid=patient_id)
-    patient_bloodpressures = BloodPressure.objects.filter(patientid=patient_id)
+    patient_bloodsugars = Bloodsugar.objects.filter(patientid=patient_id)
+    patient_bloodpressures = Bloodpressure.objects.filter(patientid=patient_id)
     return render(request, 'patient_detail.html', {
         'patient': patient,
         'medical_records': medical_records,
@@ -104,11 +104,11 @@ def temperature_source(request, temperature_id):
 
 
 def patient_bloodsugar(request, patient_id):
-    bloodsugar_data = get_object_or_404(BloodSugar, patient_id=patient_id)
+    bloodsugar_data = get_object_or_404(Bloodsugar, patient_id=patient_id)
     return render(request, 'patient_bloodsugar.html', {'bloodsugar_data': bloodsugar_data})
 
 def bloodsugar_image(request, bloodsugar_id):
-    bloodsugar = get_object_or_404(BloodSugar, dataid=bloodsugar_id)
+    bloodsugar = get_object_or_404(Bloodsugar, dataid=bloodsugar_id)
     image_data = bloodsugar.image
     if image_data is None:
         return HttpResponse("Image not found", status=404)
@@ -116,7 +116,7 @@ def bloodsugar_image(request, bloodsugar_id):
     return response
 
 def bloodsugar_source(request, bloodsugar_id):
-    bloodsugar = get_object_or_404(BloodSugar, dataid=bloodsugar_id)
+    bloodsugar = get_object_or_404(Bloodsugar, dataid=bloodsugar_id)
     file_data = bloodsugar.sourcefile
     if file_data is None:
         return HttpResponse("File not found", status=404)
@@ -126,11 +126,11 @@ def bloodsugar_source(request, bloodsugar_id):
 
 
 def patient_bloodpressure(request, patient_id):
-    bloodpressure_data = get_object_or_404(BloodPressure, patient_id=patient_id)
+    bloodpressure_data = get_object_or_404(Bloodpressure, patient_id=patient_id)
     return render(request, 'patient_bloodpressure.html', {'bloodpressure_data': bloodpressure_data})
 
 def bloodpressure_image(request, bloodpressure_id):
-    bloodpressure = get_object_or_404(BloodPressure, dataid=bloodpressure_id)
+    bloodpressure = get_object_or_404(Bloodpressure, dataid=bloodpressure_id)
     image_data = bloodpressure.image
     if image_data is None:
         return HttpResponse("Image not found", status=404)
@@ -138,10 +138,12 @@ def bloodpressure_image(request, bloodpressure_id):
     return response
 
 def bloodpressure_source(request, bloodpressure_id):
-    bloodpressure = get_object_or_404(BloodPressure, dataid=bloodpressure_id)
+    bloodpressure = get_object_or_404(Bloodpressure, dataid=bloodpressure_id)
     file_data = bloodpressure.sourcefile
     if file_data is None:
         return HttpResponse("File not found", status=404)
     response = HttpResponse(file_data, content_type='application/octet-stream')
     response['Content-Disposition'] = f'attachment; filename="bloodpressure_{bloodpressure_id}.csv"'
     return response
+
+
